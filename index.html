@@ -100,6 +100,18 @@
                     s.async=true;
                     document.head.appendChild(s);
                 </script>
+                
+                <!-- Contador de Visualizações -->
+                <div class="mt-3 text-center font-sans text-[15px] flex items-center justify-center gap-1.5">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#d40000]"></span>
+                    </span>
+                    <div>
+                        <span id="viewer-count" class="font-bold text-[#d40000]">924</span> 
+                        <span class="text-gray-600">personas viendo ahora</span>
+                    </div>
+                </div>
             </div>
 
         </main>
@@ -114,7 +126,46 @@
       </div>
     </div>
 
-    <!-- Script Externo -->
-    <script src="assets/script.js"></script>
+    <!-- Script Inline para garantir funcionamento do contador -->
+    <script>
+        (function() {
+            // Garante que o contador funcione independentemente de arquivos externos
+            var viewerDisplay = document.getElementById('viewer-count');
+            
+            if (viewerDisplay) {
+                var min = 913;
+                var max = 957;
+                
+                // Define valor inicial aleatório
+                var current = Math.floor(Math.random() * (max - min + 1)) + min;
+                viewerDisplay.textContent = current;
+
+                function updateCount() {
+                    // Variação natural (-3 a +3)
+                    var change = Math.floor(Math.random() * 7) - 3;
+                    current += change;
+
+                    // Manter limites (Clamping)
+                    if (current < min) current = min + Math.floor(Math.random() * 3);
+                    if (current > max) current = max - Math.floor(Math.random() * 3);
+
+                    viewerDisplay.textContent = current;
+                    
+                    // Tempo aleatório entre updates (1s a 3s)
+                    setTimeout(updateCount, Math.floor(Math.random() * 2000) + 1000);
+                }
+                
+                // Inicia loop imediatamente
+                updateCount();
+            }
+
+            // Prevenir cliques indesejados no body (para não pausar o player)
+            if (document.body) {
+                document.body.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
