@@ -1,15 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-
-const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error("Could not find root element to mount to");
-}
-
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// Este arquivo é mantido apenas para evitar erros do sistema de build.
+// O projeto roda em modo estático via index.html e assets/script.js.
+console.log("Static mode active. React initialization skipped.");

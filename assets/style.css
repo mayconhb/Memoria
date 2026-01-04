@@ -1,0 +1,16 @@
+/* 
+   style.css
+*/
+
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f0f0f0;
+}
+
+/* Transições suaves gerais */
+#site-header, #intro-content, #main-content {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
