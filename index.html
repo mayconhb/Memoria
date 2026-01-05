@@ -99,6 +99,12 @@
         
         #checkout-button { cursor: pointer; text-decoration: none; transition: transform 0.2s; }
         #checkout-button:active { transform: scale(0.95); }
+        .animate-button-pulse { animation: button-pulse 2s infinite; }
+        @keyframes button-pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+            50% { transform: scale(1.05); box-shadow: 0 20px 25px -5px rgba(40, 167, 69, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        }
 
         @font-face { font-family: 'Merriweather'; font-display: optional; }
         @font-face { font-family: 'Playfair Display'; font-display: optional; }
@@ -153,7 +159,7 @@
 
             <!-- Botão de Ação (Checkout) -->
                 <div id="checkout-container" class="mt-8 flex flex-col items-center justify-center text-center w-full gap-5 mx-auto" style="display: none !important; max-width: 320px; margin-left: auto; margin-right: auto;">
-                    <a href="#" id="checkout-button" class="w-full bg-green text-white font-bold py-4 px-6 rounded-lg text-lg uppercase tracking-wider shadow-lg flex items-center justify-center gap-2" style="display: flex;">
+                    <a href="#" id="checkout-button" class="w-full bg-green text-white font-bold py-4 px-6 rounded-lg text-lg uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 animate-button-pulse" style="display: flex;">
                         <span>Quiero saber más</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" x2="19" y1="12" y2="12"></line>
