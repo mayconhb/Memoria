@@ -96,49 +96,33 @@
                 <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
                 
                 <script>
-                  console.log("🕵️ Iniciando Modo Hacker (Forçado)...");
+                  console.log("📸 Preparando Raio-X do VTurb...");
 
-                  const vturbHacker = setInterval(() => {
-                    
-                    // 1. Procura o componente do VTurb
-                    const vturbComponent = document.querySelector("vturb-smartplayer");
-                    
-                    // 2. Verifica se ele tem o "Shadow DOM" aberto (sua imagem confirmou que tem!)
-                    if (vturbComponent && vturbComponent.shadowRoot) {
-                        
-                        // 3. Busca o elemento <video> real escondido lá dentro
-                        const videoNativo = vturbComponent.shadowRoot.querySelector("video");
-                        
-                        // Se achou o vídeo e ele ainda não foi grampeado
-                        if (videoNativo && !videoNativo.dataset.hacked) {
-                            
-                            console.log("🔓 VÍDEO NATIVO ENCONTRADO! Conectando...");
-
-                            // --- ESCUTA O PLAY DIRETO NO NAVEGADOR ---
-                            videoNativo.addEventListener("play", () => {
-                                console.log("🔥 PLAY DETECTADO (Nativo)");
-                                // window.dataLayer.push({'event': 'video_play'});
-                            });
-
-                            // --- ESCUTA O PAUSE ---
-                            videoNativo.addEventListener("pause", () => {
-                                console.log("⏸️ PAUSE DETECTADO (Nativo)");
-                            });
-
-                            // --- ESCUTA O TEMPO (Opcional, bom para VSL) ---
-                            // videoNativo.addEventListener("timeupdate", () => {
-                            //    if(videoNativo.currentTime > 2) console.log("Tempo:", videoNativo.currentTime);
-                            // });
-
-                            // Marca o vídeo para não adicionar o evento duas vezes
-                            videoNativo.dataset.hacked = "true";
-                            
-                            // Para de procurar, missão cumprida
-                            clearInterval(vturbHacker);
-                            console.log("🚀 Rastreamento Ativo via Shadow DOM.");
-                        }
-                    }
-                  }, 500); // Tenta a cada meio segundo
+                  // Espera 5 segundos para garantir que o vídeo tentou carregar (mesmo com erro de buffer)
+                  setTimeout(() => {
+                      const vturb = document.querySelector("vturb-smartplayer");
+                      
+                      if (vturb && vturb.shadowRoot) {
+                          console.log("=== INÍCIO DO RAIO-X ===");
+                          
+                          // 1. Tenta achar vídeos diretamente
+                          const videos = vturb.shadowRoot.querySelectorAll("video");
+                          console.log(`🎥 Tags <video> encontradas: ${videos.length}`);
+                          
+                          // 2. Imprime o HTML interno para vermos a estrutura
+                          if (videos.length === 0) {
+                             console.log("⚠️ Estrutura Interna (Copie isso se puder):");
+                             console.log(vturb.shadowRoot.innerHTML.slice(0, 500)); // Mostra os primeiros 500 caracteres
+                          } else {
+                             console.log("✅ O vídeo está lá! O seletor anterior falhou por tempo.");
+                             console.log(videos[0]); // Mostra o elemento vídeo
+                          }
+                          
+                          console.log("=== FIM DO RAIO-X ===");
+                      } else {
+                          console.log("❌ Componente VTurb não encontrado ou fechado.");
+                      }
+                  }, 5000); // 5 segundos de espera
                 </script>
                 
                 <!-- Contador de Visualizações -->
