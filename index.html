@@ -124,7 +124,7 @@
 
         <main id="main-content" class="flex-1 bg-white px-4 pt-1 pb-8 relative" style="z-index: 10;">
             <div class="flex justify-center mb-2">
-                <span class="text-xs uppercase font-bold text-gray-800 tracking-wide" style="font-size: 11px;">28 dic 2025</span>
+                <span id="current-date" class="text-xs uppercase font-bold text-gray-800 tracking-wide" style="font-size: 11px;"></span>
             </div>
 
             <article class="mb-6">
@@ -175,6 +175,16 @@
 
     <script>
         (function() {
+            const dateElement = document.getElementById('current-date');
+            if (dateElement) {
+                const date = new Date();
+                date.setDate(date.getDate() - 3);
+                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                let formattedDate = date.toLocaleDateString('es-ES', options).replace(/\./g, '');
+                // Ensure format matches "28 dic 2025"
+                dateElement.textContent = formattedDate;
+            }
+
             var viewerDisplay = document.getElementById('viewer-count');
             if (viewerDisplay) {
                 var min = 913, max = 957;
