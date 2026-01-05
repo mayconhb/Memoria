@@ -95,36 +95,6 @@
             <div class="w-full mt-6 border-t border-gray-100 pt-6">
                 <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
                 
-                <script>
-                  console.log("📸 Preparando Raio-X do VTurb...");
-
-                  // Espera 5 segundos para garantir que o vídeo tentou carregar (mesmo com erro de buffer)
-                  setTimeout(() => {
-                      const vturb = document.querySelector("vturb-smartplayer");
-                      
-                      if (vturb && vturb.shadowRoot) {
-                          console.log("=== INÍCIO DO RAIO-X ===");
-                          
-                          // 1. Tenta achar vídeos diretamente
-                          const videos = vturb.shadowRoot.querySelectorAll("video");
-                          console.log(`🎥 Tags <video> encontradas: ${videos.length}`);
-                          
-                          // 2. Imprime o HTML interno para vermos a estrutura
-                          if (videos.length === 0) {
-                             console.log("⚠️ Estrutura Interna (Copie isso se puder):");
-                             console.log(vturb.shadowRoot.innerHTML.slice(0, 500)); // Mostra os primeiros 500 caracteres
-                          } else {
-                             console.log("✅ O vídeo está lá! O seletor anterior falhou por tempo.");
-                             console.log(videos[0]); // Mostra o elemento vídeo
-                          }
-                          
-                          console.log("=== FIM DO RAIO-X ===");
-                      } else {
-                          console.log("❌ Componente VTurb não encontrado ou fechado.");
-                      }
-                  }, 5000); // 5 segundos de espera
-                </script>
-                
                 <!-- Contador de Visualizações -->
                 <div class="mt-3 text-center font-sans text-[15px] flex items-center justify-center gap-1.5">
                     <span class="relative flex h-2.5 w-2.5">
