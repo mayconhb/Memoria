@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <style>
-        /* Critical CSS & Tailwind Inlined */
+        /* Ultra Critical CSS */
         :root { --elpais-yellow: #fcdb00; --news-black: #1a1a1a; }
         body { background-color: #f0f0f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1a1a1a; margin: 0; -webkit-font-smoothing: antialiased; }
         #main-app-container { width: 100%; max-width: 414px; background-color: white; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); position: relative; }
@@ -22,7 +22,6 @@
         .justify-center { justify-content: center; }
         .justify-between { justify-content: space-between; }
         .w-full { width: 100%; }
-        .h-full { height: 100%; }
         .bg-white { background-color: #ffffff; }
         .bg-elpais-yellow { background-color: var(--elpais-yellow); }
         .px-4 { padding-left: 1rem; padding-right: 1rem; }
@@ -33,6 +32,10 @@
         .uppercase { text-transform: uppercase; }
         .text-xs { font-size: 0.75rem; }
         .tracking-wide { letter-spacing: 0.025em; }
+        .mt-6 { margin-top: 1.5rem; }
+        .pt-6 { padding-top: 1.5rem; }
+        .border-t { border-top-width: 1px; }
+        .border-gray-100 { border-color: #f3f4f6; }
         
         /* Font swap for performance */
         @font-face { font-family: 'Merriweather'; font-display: optional; }
@@ -42,16 +45,20 @@
         .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
         
-        /* Ocultar vídeo até o player carregar para evitar Layout Shift */
-        vturb-smartplayer { min-height: 225px; background: #000; display: block; }
+        /* Placeholder do vídeo para evitar CLS */
+        .video-wrapper { width: 100%; max-width: 400px; margin: 0 auto; background: #000; position: relative; }
+        .video-placeholder { padding-bottom: 56.25%; /* 16:9 */ }
+        vturb-smartplayer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
     </style>
 
-    <!-- Google Fonts -->
+    <!-- Preload Critical Assets -->
+    <link rel="preload" as="script" href="https://scripts.converteai.net/6959b2bbc9de5690088a914b/players/6959b2bbc9de5690088a914b/player.js">
+    
+    <!-- Google Fonts - Ultra Speed -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"></noscript>
 
-    <!-- Tailwind CSS (Deferred + Prefetch) -->
-    <link rel="prefetch" href="https://cdn.tailwindcss.com">
+    <!-- Tailwind CSS (Deferred) -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
       window.addEventListener('DOMContentLoaded', () => {
@@ -133,8 +140,9 @@
 
             <!-- Seção de Vídeo Vturb (Smart Player) -->
             <div class="w-full mt-6 border-t border-gray-100 pt-6">
-                <div style="width: 100%; max-width: 400px; margin: 0 auto;">
-                    <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; width: 100%;"></vturb-smartplayer>
+                <div class="video-wrapper">
+                    <div class="video-placeholder"></div>
+                    <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b"></vturb-smartplayer>
                 </div>
                 
                 <!-- Contador de Visualizações -->
