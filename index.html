@@ -139,9 +139,23 @@
                 </p>
             </article>
 
+            <!-- Seção de Vídeo Vturb (Smart Player) -->
             <div class="w-full mt-6 border-t pt-6" style="border-color: #f3f4f6;">
                 <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
                 
+                <!-- Contador de Visualizações -->
+                <div class="mt-3 text-center text-sm flex items-center justify-center gap-1-5" style="font-size: 15px;">
+                    <span class="relative flex h-2-5 w-2-5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400" style="opacity: 0.75;"></span>
+                        <span class="relative inline-flex rounded-full h-2-5 w-2-5" style="background-color: var(--news-red);"></span>
+                    </span>
+                    <div>
+                        <span id="viewer-count" class="font-bold text-red">924</span> 
+                        <span class="text-gray-600">personas viendo ahora</span>
+                    </div>
+                </div>
+
+                <!-- Botão de Ação (Checkout) -->
                 <div id="checkout-container" class="mt-8 flex flex-col items-center justify-center text-center w-full gap-5" style="display: none !important;">
                     <a href="#" id="checkout-button" class="w-full bg-green text-white font-bold py-4 px-6 rounded-lg text-lg uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 mx-auto" style="max-width: 320px;">
                         <span>Quiero saber más</span>
