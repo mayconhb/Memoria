@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://scripts.converteai.net">
     <link rel="preconnect" href="https://pay.hotmart.com">
     <link rel="preload" href="https://pay.hotmart.com/X103671940D?off=wrgs5ex0&checkoutMode=10" as="document">
+    <link rel="preload" href="https://pay.hotmart.com/X103671940D?off=zitevzea&checkoutMode=10" as="document">
     
     <style>
         /* CSS Puro - Zero Bloqueio e Performance Máxima */
@@ -100,6 +101,78 @@
         .font-display { font-family: 'Playfair Display', 'Times New Roman', serif; }
         
         #checkout-button { cursor: pointer; text-decoration: none; transition: transform 0.2s; }
+
+        /* Exit Popup Styles */
+        #exit-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        #exit-popup .popup-content {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            max-width: 350px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+        #exit-popup .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #exit-popup .offer-title {
+            color: var(--news-red);
+            font-weight: 900;
+            font-size: 22px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        #exit-popup .offer-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        #exit-popup .price-box {
+            margin-bottom: 25px;
+        }
+        #exit-popup .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 18px;
+        }
+        #exit-popup .new-price {
+            color: var(--news-green);
+            font-size: 36px;
+            font-weight: 900;
+            display: block;
+        }
+        #exit-popup .popup-btn {
+            background: var(--news-green);
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 8px;
+            display: block;
+            font-size: 18px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
         #checkout-button:active { transform: scale(0.95); }
         .animate-button-pulse { animation: button-pulse 2s infinite; }
         @keyframes button-pulse {
@@ -214,6 +287,68 @@
         (function() {
             var s=document.createElement("script");
             s.src="https://scripts.converteai.net/8be91a4f-8063-443e-ad7c-0bc55451c92d/players/6959b2bbc9de5690088a914b/v4/player.js", s.async=!0,document.head.appendChild(s);
+        })();
+    </script>
+
+    <!-- Exit Popup -->
+    <div id="exit-popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <div class="offer-title">¡Oferta Especial!</div>
+            <p class="offer-text">No te vayas sin tu descuento de Año Nuevo. ¡Aprovecha ahora!</p>
+            <div class="price-box">
+                <span class="old-price">US$ 17</span>
+                <span class="new-price">US$ 9,90</span>
+            </div>
+            <a href="https://pay.hotmart.com/X103671940D?off=zitevzea&checkoutMode=10" class="popup-btn">Quiero mi descuento</a>
+        </div>
+    </div>
+
+    <script>
+        function closePopup() {
+            document.getElementById('exit-popup').style.display = 'none';
+        }
+
+        (function() {
+            let popupTriggered = false;
+            const checkoutContainer = document.getElementById('checkout-container');
+
+            function showPopup() {
+                if (popupTriggered) return;
+                
+                // Only trigger if checkout-container is visible
+                const isVisible = checkoutContainer && 
+                                 checkoutContainer.style.display !== 'none' && 
+                                 window.getComputedStyle(checkoutContainer).display !== 'none';
+                
+                if (isVisible) {
+                    document.getElementById('exit-popup').style.display = 'flex';
+                    popupTriggered = true;
+                }
+            }
+
+            // Intercept Back Button
+            history.pushState(null, null, location.href);
+            window.onpopstate = function() {
+                const checkoutContainer = document.getElementById('checkout-container');
+                const isVisible = checkoutContainer && 
+                                 checkoutContainer.style.display !== 'none' && 
+                                 window.getComputedStyle(checkoutContainer).display !== 'none';
+                
+                if (isVisible && !popupTriggered) {
+                    showPopup();
+                    history.pushState(null, null, location.href);
+                } else {
+                    // If not visible or already shown, allow normal back behavior
+                    // but we need to stay if we want to show it.
+                    // For now, if shown or not visible, let them go.
+                }
+            };
+
+            // Mouse leave for desktop as fallback
+            document.addEventListener('mouseleave', (e) => {
+                if (e.clientY < 0) showPopup();
+            });
         })();
     </script>
 </body>
