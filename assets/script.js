@@ -50,18 +50,8 @@
     var container = document.getElementById('checkout-container');
 
     function startTimer() {
-        if (!timerInterval) {
-            timerInterval = setInterval(function() {
-                if (isPlaying) {
-                    playTime++;
-                    if (playTime >= targetTime) {
-                        if (container) container.classList.remove('hidden');
-                        clearInterval(timerInterval);
-                        timerInterval = null;
-                    }
-                }
-            }, 1000);
-        }
+        // Temporizador desativado conforme solicitado
+        return;
     }
 
     // Integração com a API do Vturb (SmartPlayer)
@@ -83,7 +73,6 @@
 
         if (isPlayEvent) {
             isPlaying = true;
-            startTimer();
         } else if (isPauseEvent) {
             isPlaying = false;
         }
@@ -97,22 +86,12 @@
             if (inst.state === 'VIDEO_PLAYING' || inst.video.playing === true) {
                 if (!isPlaying) {
                     isPlaying = true;
-                    startTimer();
                 }
             } else if (inst.state === 'VIDEO_PAUSED' || inst.video.paused === true) {
                 if (isPlaying) {
                     isPlaying = false;
                 }
             }
-            
-            var currentTime = inst.video.currentTime;
-            if (window.lastVideoTime !== undefined && currentTime > window.lastVideoTime) {
-                if (!isPlaying) {
-                    isPlaying = true;
-                    startTimer();
-                }
-            }
-            window.lastVideoTime = currentTime;
         }
     }, 500);
 

@@ -147,12 +147,33 @@
                         </svg>
                     </a>
                     <p class="text-black font-bold text-sm">
-                        <span class="text-[#d40000] animate-pulse">¡Atención!</span> Quedan solo <span class="text-[#d40000] animate-pulse">13</span> plazas disponibles
+                        <span class="text-[#d40000] animate-pulse">¡Atención!</span> Quedan solo <span class="text-[#d40000] animate-pulse">13</span> plazas disponíveis
                     </p>
                 </div>
             </div>
 
         </main>
+        
+        <script>
+            // Forçar ocultação permanente
+            document.addEventListener('DOMContentLoaded', () => {
+                const container = document.getElementById('checkout-container');
+                if (container) {
+                    container.classList.add('hidden');
+                    // Sobrescrever qualquer tentativa de remover a classe
+                    const observer = new MutationObserver((mutations) => {
+                        mutations.forEach((mutation) => {
+                            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                                if (!container.classList.contains('hidden')) {
+                                    container.classList.add('hidden');
+                                }
+                            }
+                        });
+                    });
+                    observer.observe(container, { attributes: true });
+                }
+            });
+        </script>
         
         <!-- Footer -->
         <footer id="site-footer" class="bg-white py-6 border-t border-gray-200 text-center transition-all duration-300">
