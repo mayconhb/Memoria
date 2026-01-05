@@ -46,11 +46,10 @@
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
     </style>
 
-    <!-- Preload Critical Assets -->
-    <link rel="preload" as="script" href="https://scripts.converteai.net/6959b2bbc9de5690088a914b/players/6959b2bbc9de5690088a914b/player.js">
+    <!-- Preload Critical Assets (FONTS ONLY) -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <!-- Google Fonts - Ultra Speed -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
     <!-- Tailwind CSS (Deferred) -->
@@ -179,8 +178,19 @@
     <!-- Scripts -->
     <script src="assets/script.js" defer></script>
     
-    <!-- VTurb Speed Optimization -->
-    <link rel="preload" as="script" href="https://scripts.converteai.net/6959b2bbc9de5690088a914b/players/6959b2bbc9de5690088a914b/player.js">
-    <script type="text/javascript" id="scr_6959b2bbc9de5690088a914b" src="https://scripts.converteai.net/6959b2bbc9de5690088a914b/players/6959b2bbc9de5690088a914b/player.js" async></script>
+    <!-- VTurb Speed Optimization (DEFERRED) -->
+    <script type="text/javascript" id="scr_6959b2bbc9de5690088a914b">
+        // Só carrega o vídeo 2 segundos após a página estar pronta
+        // Isso prioriza o FCP e o texto da página
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = 'https://scripts.converteai.net/6959b2bbc9de5690088a914b/players/6959b2bbc9de5690088a914b/player.js';
+                s.async = true;
+                document.body.appendChild(s);
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
