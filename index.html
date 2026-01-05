@@ -135,16 +135,18 @@
             font-weight: bold;
         }
         #exit-popup .offer-title {
-            color: var(--news-red);
+            color: #000;
             font-weight: 900;
-            font-size: 22px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+            font-size: 24px;
+            text-transform: none;
+            margin-bottom: 15px;
+            line-height: 1.2;
         }
         #exit-popup .offer-text {
             font-size: 16px;
             margin-bottom: 20px;
             color: #333;
+            line-height: 1.5;
         }
         #exit-popup .price-box {
             margin-bottom: 25px;
@@ -155,22 +157,36 @@
             font-size: 18px;
         }
         #exit-popup .new-price {
-            color: var(--news-green);
-            font-size: 36px;
+            color: var(--news-red);
+            font-size: 32px;
             font-weight: 900;
             display: block;
+            margin-top: 5px;
         }
         #exit-popup .popup-btn {
-            background: var(--news-green);
-            color: #fff;
+            background: var(--elpais-yellow);
+            color: #000;
             text-decoration: none;
-            font-weight: bold;
-            padding: 15px;
+            font-weight: 900;
+            padding: 18px;
             border-radius: 8px;
             display: block;
             font-size: 18px;
             text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            box-shadow: 0 4px 15px rgba(252, 219, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        #exit-popup .decline-text {
+            display: block;
+            margin-top: 20px;
+            color: #999;
+            font-size: 13px;
+            text-decoration: underline;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
         }
 
         #checkout-button:active { transform: scale(0.95); }
@@ -318,14 +334,14 @@
     <!-- Exit Popup -->
     <div id="exit-popup">
         <div class="popup-content">
-            <span class="close-popup" onclick="closePopup()">&times;</span>
-            <div class="offer-title">¡Oferta Especial!</div>
-            <p class="offer-text">No te vayas sin tu descuento de Año Nuevo. ¡Aprovecha ahora!</p>
+            <div class="offer-title">¿Tu salud mental vale menos que una pizza?</div>
+            <p class="offer-text">Por el precio de una comida rápida, puedes tener acceso al protocolo completo del Dr. Gupta y volver a lucir una mente clara. ¿De verdad vas a dejar pasar esto?</p>
             <div class="price-box">
                 <span class="old-price">US$ 17</span>
-                <span class="new-price">US$ 9,90</span>
+                <span class="new-price">Solo ahora: US$ 9,90</span>
             </div>
-            <a href="https://pay.hotmart.com/X103671940D?off=zitevzea&checkoutMode=10" class="popup-btn">Quiero mi descuento</a>
+            <a href="https://pay.hotmart.com/X103671940D?off=zitevzea&checkoutMode=10" class="popup-btn">USAR MI DESCUENTO AHORA</a>
+            <button class="decline-text" onclick="closePopup()">No gracias, prefiero seguir perdiendo mis recuerdos.</button>
         </div>
     </div>
 
