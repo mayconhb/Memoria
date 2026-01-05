@@ -54,34 +54,11 @@
     <!-- Google Fonts - Ultra Speed -->
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
-    <!-- Tailwind CSS (Deferred) -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-          tailwind.config = {
-            theme: {
-              extend: {
-                fontFamily: {
-                  serif: ['"Merriweather"', 'Georgia', 'serif'],
-                  display: ['"Playfair Display"', 'Times New Roman', 'serif'],
-                  sans: ['"Libre Franklin"', 'Arial', 'sans-serif'],
-                },
-                colors: {
-                  'elpais-yellow': '#fcdb00',
-                  'news-black': '#1a1a1a',
-                }
-              }
-            }
-          };
-      });
-    </script>
-    
-    <!-- CSS Local -->
-    <!-- Movi o conteúdo para o inline acima para evitar bloqueio -->
+    <!-- Tailwind CSS (Deferred - Moved to end of body) -->
     
     <style>
-        .drop-cap-e { font-family: 'Playfair Display', serif; }
-        .border-b-thin { border-bottom-width: 1px; border-color: #e5e7eb; }
+        .drop-cap-e { font-family: serif; }
+        .border-b-thin { border-bottom: 1px solid #e5e7eb; }
     </style>
 </head>
 <body class="bg-[#f0f0f0] font-sans text-[#1a1a1a]">
@@ -179,6 +156,28 @@
 
     <!-- Scripts -->
     <script src="assets/script.js" defer></script>
+
+    <!-- Tailwind CSS (Moved to end to reduce TBT) -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script>
+      window.addEventListener('load', () => {
+          tailwind.config = {
+            theme: {
+              extend: {
+                fontFamily: {
+                  serif: ['"Merriweather"', 'Georgia', 'serif'],
+                  display: ['"Playfair Display"', 'Times New Roman', 'serif'],
+                  sans: ['"Libre Franklin"', 'Arial', 'sans-serif'],
+                },
+                colors: {
+                  'elpais-yellow': '#fcdb00',
+                  'news-black': '#1a1a1a',
+                }
+              }
+            }
+          };
+      });
+    </script>
     
     <!-- VTurb Speed Optimization (DEFERRED) -->
     <script type="text/javascript" id="scr_6959b2bbc9de5690088a914b">
