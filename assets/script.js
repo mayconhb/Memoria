@@ -54,7 +54,9 @@
             timerInterval = setInterval(function() {
                 if (isPlaying) {
                     playTime++;
+                    console.log('>>> [TIMER] Video Reproducing: ' + playTime + 's / ' + targetTime + 's');
                     if (playTime >= targetTime) {
+                        console.log('>>> [TIMER] Target reached! Displaying button.');
                         if (container) container.classList.remove('hidden');
                         clearInterval(timerInterval);
                     }
