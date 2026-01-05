@@ -65,15 +65,42 @@
 
     // Integração com a API do Vturb (SmartPlayer)
     window.addEventListener('message', function(event) {
-        if (event.data && event.data.source === 'vturb') {
-            var msg = event.data.payload;
-            if (msg === 'play') {
-                isPlaying = true;
-                startTimer();
-            } else if (msg === 'pause') {
-                isPlaying = false;
-            }
+        // Log para debug no console do navegador (pode ser removido depois)
+        console.log('Vturb Message Received:', event.data);
+
+        // O Vturb às vezes envia apenas a string 'play' ou 'pause' diretamente no data
+        // ou dentro de um objeto dependendo da versão
+        var msg = '';
+        if (typeof event.data === 'string') {
+            msg = event.data;
+        } else if (event.data && event.data.payload) {
+            msg = event.data.payload;
+        } else if (event.data && event.data.event) {
+            msg = event.data.event;
         }
+
+        if (msg === 'play' || msg === 'vturb_play') {
+            console.log('Video Play Detected');
+            isPlaying = true;
+            startTimer();
+        } else if (msg === 'pause' || msg === 'vturb_pause') {
+            console.log('Video Pause Detected');
+            isPlaying = false;
+        }
+    });
+
+    // SmartPlayer API listener alternativo
+    window._vturb_api = window._vturb_api || [];
+    window._vturb_api.push(function(player) {
+        player.on('play', function() {
+            console.log('API: Play');
+            isPlaying = true;
+            startTimer();
+        });
+        player.on('pause', function() {
+            console.log('API: Pause');
+            isPlaying = false;
+        });
     });
 
     // Fallback: Tentar capturar eventos via custom events se o postMessage falhar
