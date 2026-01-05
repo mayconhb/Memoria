@@ -96,59 +96,49 @@
                 <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
                 
                 <script>
-                  console.log("🕵️ Iniciando Varredura Profunda (Shadow DOM)...");
+                  console.log("🕵️ Iniciando Modo Hacker (Forçado)...");
 
-                  const rastreadorVturb = setInterval(() => {
-                    let encontrouAlgo = false;
-
-                    // --- TENTATIVA 1: Via API Oficial (O jeito educado) ---
-                    if (window.smartplayer && window.smartplayer.instances && window.smartplayer.instances.length > 0) {
-                        window.smartplayer.instances.forEach(instance => {
-                            // Verifica se já não adicionamos o listener para não duplicar
-                            if (!instance.rastreamentoAtivo) {
-                                instance.on("play", () => console.log("🔥 PLAY (Via API)"));
-                                instance.on("pause", () => console.log("⏸️ PAUSE (Via API)"));
-                                instance.rastreamentoAtivo = true; // Marca que já ativamos
-                                console.log("✅ API Oficial Conectada!");
-                                encontrouAlgo = true;
-                            }
-                        });
-                    }
-
-                    // --- TENTATIVA 2: Via Shadow DOM (O jeito "bruto") ---
-                    // Procura o componente do VTurb na página
-                    const vturbElement = document.querySelector("vturb-smartplayer");
+                  const vturbHacker = setInterval(() => {
                     
-                    // Se achou o componente e ele tem a "sombra" (conteúdo interno) aberta
-                    if (vturbElement && vturbElement.shadowRoot) {
-                        // Tenta achar o elemento <video> real lá dentro
-                        const videoNativo = vturbElement.shadowRoot.querySelector("video");
+                    // 1. Procura o componente do VTurb
+                    const vturbComponent = document.querySelector("vturb-smartplayer");
+                    
+                    // 2. Verifica se ele tem o "Shadow DOM" aberto (sua imagem confirmou que tem!)
+                    if (vturbComponent && vturbComponent.shadowRoot) {
                         
-                        if (videoNativo && !videoNativo.dataset.rastreando) {
-                            console.log("🔓 Vídeo Nativo encontrado no Shadow DOM!");
+                        // 3. Busca o elemento <video> real escondido lá dentro
+                        const videoNativo = vturbComponent.shadowRoot.querySelector("video");
+                        
+                        // Se achou o vídeo e ele ainda não foi grampeado
+                        if (videoNativo && !videoNativo.dataset.hacked) {
                             
-                            // Adiciona o ouvinte direto no motor do navegador
+                            console.log("🔓 VÍDEO NATIVO ENCONTRADO! Conectando...");
+
+                            // --- ESCUTA O PLAY DIRETO NO NAVEGADOR ---
                             videoNativo.addEventListener("play", () => {
-                                console.log("🎯 PLAY DETECTADO (NATIVO)");
+                                console.log("🔥 PLAY DETECTADO (Nativo)");
                                 // window.dataLayer.push({'event': 'video_play'});
                             });
 
+                            // --- ESCUTA O PAUSE ---
                             videoNativo.addEventListener("pause", () => {
-                                console.log("⏸️ PAUSE DETECTADO (NATIVO)");
+                                console.log("⏸️ PAUSE DETECTADO (Nativo)");
                             });
 
-                            videoNativo.dataset.rastreando = "true"; // Marca para não repetir
-                            encontrouAlgo = true;
+                            // --- ESCUTA O TEMPO (Opcional, bom para VSL) ---
+                            // videoNativo.addEventListener("timeupdate", () => {
+                            //    if(videoNativo.currentTime > 2) console.log("Tempo:", videoNativo.currentTime);
+                            // });
+
+                            // Marca o vídeo para não adicionar o evento duas vezes
+                            videoNativo.dataset.hacked = "true";
+                            
+                            // Para de procurar, missão cumprida
+                            clearInterval(vturbHacker);
+                            console.log("🚀 Rastreamento Ativo via Shadow DOM.");
                         }
                     }
-
-                    // Se qualquer um dos dois métodos funcionou, paramos de procurar
-                    if (encontrouAlgo) {
-                        clearInterval(rastreadorVturb);
-                        console.log("🚀 Rastreamento 100% Ativo. Pode testar.");
-                    }
-
-                  }, 1000); // Tenta a cada 1 segundo
+                  }, 500); // Tenta a cada meio segundo
                 </script>
                 
                 <!-- Contador de Visualizações -->
