@@ -11,27 +11,47 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://i.imgur.com/NKFUwPv.png">
-    
-    <!-- Critical CSS Inlined -->
     <style>
-        body { background-color: #f0f0f0; font-family: sans-serif; color: #1a1a1a; margin: 0; }
-        #main-app-container { width: 100%; max-width: 414px; background-color: white; margin: 0 auto; min-height: 100vh; }
-        .hidden-at-start { display: none !important; }
+        /* Critical CSS & Tailwind Inlined */
+        :root { --elpais-yellow: #fcdb00; --news-black: #1a1a1a; }
+        body { background-color: #f0f0f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1a1a1a; margin: 0; -webkit-font-smoothing: antialiased; }
+        #main-app-container { width: 100%; max-width: 414px; background-color: white; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); position: relative; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+        .bg-white { background-color: #ffffff; }
+        .bg-elpais-yellow { background-color: var(--elpais-yellow); }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .border-b { border-bottom-width: 1px; }
+        .border-gray-200 { border-color: #e5e7eb; }
+        .font-bold { font-weight: 700; }
+        .uppercase { text-transform: uppercase; }
+        .text-xs { font-size: 0.75rem; }
+        .tracking-wide { letter-spacing: 0.025em; }
+        
+        /* Font swap for performance */
+        @font-face { font-family: 'Merriweather'; font-display: optional; }
+        @font-face { font-family: 'Playfair Display'; font-display: optional; }
+        @font-face { font-family: 'Libre Franklin'; font-display: optional; }
+
         .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
-        /* Font swap for performance */
-        @font-face { font-family: 'Merriweather'; font-display: swap; }
-        @font-face { font-family: 'Playfair Display'; font-display: swap; }
-        @font-face { font-family: 'Libre Franklin'; font-display: swap; }
+        
+        /* Ocultar vídeo até o player carregar para evitar Layout Shift */
+        vturb-smartplayer { min-height: 225px; background: #000; display: block; }
     </style>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"></noscript>
 
-    <!-- Tailwind CSS (Deferred) -->
+    <!-- Tailwind CSS (Deferred + Prefetch) -->
+    <link rel="prefetch" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
       window.addEventListener('DOMContentLoaded', () => {
@@ -113,7 +133,9 @@
 
             <!-- Seção de Vídeo Vturb (Smart Player) -->
             <div class="w-full mt-6 border-t border-gray-100 pt-6">
-                <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
+                <div style="aspect-ratio: 16/9; width: 100%; max-width: 400px; margin: 0 auto; background: #000;">
+                    <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; width: 100%; height: 100%;"></vturb-smartplayer>
+                </div>
                 
                 <!-- Contador de Visualizações -->
                 <div class="mt-3 text-center font-sans text-[15px] flex items-center justify-center gap-1.5">
