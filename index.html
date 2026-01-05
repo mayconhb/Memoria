@@ -140,6 +140,8 @@
             </article>
 
             <div class="w-full mt-6 border-t pt-6" style="border-color: #f3f4f6;">
+                <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
+                
                 <div id="checkout-container" class="mt-8 flex flex-col items-center justify-center text-center w-full gap-5" style="display: none !important;">
                     <a href="#" id="checkout-button" class="w-full bg-green text-white font-bold py-4 px-6 rounded-lg text-lg uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 mx-auto" style="max-width: 320px;">
                         <span>Quiero saber más</span>
@@ -178,6 +180,12 @@
                 }
                 updateCount();
             }
+        })();
+
+        // VTurb New Video Embed
+        (function() {
+            var s=document.createElement("script");
+            s.src="https://scripts.converteai.net/8be91a4f-8063-443e-ad7c-0bc55451c92d/players/6959b2bbc9de5690088a914b/v4/player.js", s.async=!0,document.head.appendChild(s);
         })();
     </script>
 </body>
