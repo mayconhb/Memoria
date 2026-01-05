@@ -66,49 +66,62 @@
     // Integração com a API do Vturb (SmartPlayer)
     window.addEventListener('message', function(event) {
         // Log para debug no console do navegador (pode ser removido depois)
-        console.log('Vturb Message Received:', event.data);
+        console.log('Vturb Message Received (Raw):', event.data);
 
+        // Verifica o campo "type" que apareceu nos logs do usuário
         var msg = '';
-        if (typeof event.data === 'string') {
+        if (event.data && typeof event.data === 'object') {
+            msg = event.data.type || event.data.event || event.data.msg || event.data.payload || '';
+        } else if (typeof event.data === 'string') {
             try {
                 var data = JSON.parse(event.data);
-                msg = data.event || data.msg || data.payload || '';
+                msg = data.type || data.event || data.msg || data.payload || '';
             } catch(e) {
                 msg = event.data;
             }
-        } else if (event.data) {
-            msg = event.data.event || event.data.msg || event.data.payload || event.data.type || '';
         }
 
-        console.log('Parsed message:', msg);
+        console.log('Parsed message type:', msg);
 
-        if (msg === 'play' || msg === 'vturb_play' || msg === 'playing' || msg.indexOf('play') !== -1) {
-            console.log('Video Play Detected');
+        // O Vturb usa eventos como 'play', 'playing', 'paused', 'pause'
+        // Mas também envia muitos eventos de telemetria. Vamos focar nos de estado.
+        var isPlayEvent = msg === 'play' || msg === 'playing' || msg === 'vturb_play' || msg === 'VIDEO_PLAY';
+        var isPauseEvent = msg === 'pause' || msg === 'paused' || msg === 'vturb_pause' || msg === 'VIDEO_PAUSE';
+
+        if (isPlayEvent) {
+            console.log('>>> Video Play Detected via Message:', msg);
             isPlaying = true;
             startTimer();
-        } else if (msg === 'pause' || msg === 'vturb_pause' || msg === 'paused' || msg.indexOf('pause') !== -1) {
-            console.log('Video Pause Detected');
+        } else if (isPauseEvent) {
+            console.log('>>> Video Pause Detected via Message:', msg);
             isPlaying = false;
         }
     });
 
+    // Fallback de clique: Se o usuário clicar no player, provavelmente deu play
+    var playerElement = document.querySelector('vturb-smartplayer');
+    if (playerElement) {
+        playerElement.addEventListener('click', function() {
+            console.log('Player clicked - assuming play');
+            isPlaying = true;
+            startTimer();
+        });
+    }
+
     // Monitoramento via Pooling (Fallback Supremo)
-    // Se a API de mensagens falhar, verificamos o estado do elemento vturb-smartplayer
     setInterval(function() {
         var player = document.querySelector('vturb-smartplayer');
         if (player) {
-            // Alguns players expõem o estado via atributos ou propriedades
-            // Verificamos se o tempo de vídeo no player está avançando
-            if (typeof player.getCurrentTime === 'function') {
-                var currentTime = player.getCurrentTime();
+            // Tenta detectar progresso de tempo via API interna do SmartPlayer
+            if (window.smartplayer && window.smartplayer.instances && window.smartplayer.instances.length > 0) {
+                var inst = window.smartplayer.instances[0];
+                var currentTime = inst.video.currentTime;
                 if (window.lastVideoTime !== undefined && currentTime > window.lastVideoTime) {
                     if (!isPlaying) {
-                        console.log('Movement detected via API - Starting timer');
+                        console.log('Movement detected via SmartPlayer API - Starting timer');
                         isPlaying = true;
                         startTimer();
                     }
-                } else if (window.lastVideoTime !== undefined && currentTime === window.lastVideoTime) {
-                    // isPlaying = false; // Não pausamos aqui para evitar falso positivo em buffer
                 }
                 window.lastVideoTime = currentTime;
             }
