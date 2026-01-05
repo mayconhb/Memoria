@@ -193,14 +193,13 @@
             }
         })();
 
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                var s = document.createElement('script');
-                s.src = 'https://scripts.converteai.net/6959b2bbc9de5690088a914b/players/6959b2bbc9de5690088a914b/player.js';
-                s.async = true;
-                document.body.appendChild(s);
-            }, 1500);
-        });
+        // VTurb SmartPlayer Embed
+        (function() {
+            var s = document.createElement('script');
+            s.src = 'https://scripts.converteai.net/6959b2bbc9de5690088a914b/players/6959b2bbc9de5690088a914b/player.js';
+            s.async = true;
+            document.head.appendChild(s);
+        })();
     </script>
 </body>
 </html>
