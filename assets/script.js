@@ -68,26 +68,52 @@
         // Log para debug no console do navegador (pode ser removido depois)
         console.log('Vturb Message Received:', event.data);
 
-        // O Vturb às vezes envia apenas a string 'play' ou 'pause' diretamente no data
-        // ou dentro de um objeto dependendo da versão
         var msg = '';
         if (typeof event.data === 'string') {
-            msg = event.data;
-        } else if (event.data && event.data.payload) {
-            msg = event.data.payload;
-        } else if (event.data && event.data.event) {
-            msg = event.data.event;
+            try {
+                var data = JSON.parse(event.data);
+                msg = data.event || data.msg || data.payload || '';
+            } catch(e) {
+                msg = event.data;
+            }
+        } else if (event.data) {
+            msg = event.data.event || event.data.msg || event.data.payload || event.data.type || '';
         }
 
-        if (msg === 'play' || msg === 'vturb_play') {
+        console.log('Parsed message:', msg);
+
+        if (msg === 'play' || msg === 'vturb_play' || msg === 'playing' || msg.indexOf('play') !== -1) {
             console.log('Video Play Detected');
             isPlaying = true;
             startTimer();
-        } else if (msg === 'pause' || msg === 'vturb_pause') {
+        } else if (msg === 'pause' || msg === 'vturb_pause' || msg === 'paused' || msg.indexOf('pause') !== -1) {
             console.log('Video Pause Detected');
             isPlaying = false;
         }
     });
+
+    // Monitoramento via Pooling (Fallback Supremo)
+    // Se a API de mensagens falhar, verificamos o estado do elemento vturb-smartplayer
+    setInterval(function() {
+        var player = document.querySelector('vturb-smartplayer');
+        if (player) {
+            // Alguns players expõem o estado via atributos ou propriedades
+            // Verificamos se o tempo de vídeo no player está avançando
+            if (typeof player.getCurrentTime === 'function') {
+                var currentTime = player.getCurrentTime();
+                if (window.lastVideoTime !== undefined && currentTime > window.lastVideoTime) {
+                    if (!isPlaying) {
+                        console.log('Movement detected via API - Starting timer');
+                        isPlaying = true;
+                        startTimer();
+                    }
+                } else if (window.lastVideoTime !== undefined && currentTime === window.lastVideoTime) {
+                    // isPlaying = false; // Não pausamos aqui para evitar falso positivo em buffer
+                }
+                window.lastVideoTime = currentTime;
+            }
+        }
+    }, 1000);
 
     // SmartPlayer API listener alternativo
     window._vturb_api = window._vturb_api || [];
