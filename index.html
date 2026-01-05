@@ -3,133 +3,158 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>News Article</title>
+    <title>La gran mentira sobre la memoria | EL PAÍS</title>
     
     <!-- Resource Hints for Speed -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://scripts.converteai.net">
     
     <style>
-        /* Ultra Critical CSS - TUDO INLINE PARA ZERO BLOQUEIO */
-        :root { --elpais-yellow: #fcdb00; --news-black: #1a1a1a; }
+        /* CSS Puro - Zero Bloqueio e Performance Máxima */
+        :root { --elpais-yellow: #fcdb00; --news-black: #1a1a1a; --news-green: #28a745; --news-green-hover: #218838; --news-red: #d40000; }
+        * { box-sizing: border-box; }
         body { background-color: #f0f0f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1a1a1a; margin: 0; -webkit-font-smoothing: antialiased; }
-        #main-app-container { width: 100%; max-width: 414px; background-color: white; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); position: relative; }
+        
+        .min-h-screen { min-height: 100vh; }
         .flex { display: flex; }
         .flex-col { flex-direction: column; }
         .items-center { align-items: center; }
         .justify-center { justify-content: center; }
         .justify-between { justify-content: space-between; }
         .w-full { width: 100%; }
+        .max-w-mobile { max-width: 414px; margin: 0 auto; }
+        
         .bg-white { background-color: #ffffff; }
+        .bg-gray-100 { background-color: #f3f4f6; }
         .bg-elpais-yellow { background-color: var(--elpais-yellow); }
+        .bg-green { background-color: var(--news-green); }
+        .bg-green:hover { background-color: var(--news-green-hover); }
+        
         .px-4 { padding-left: 1rem; padding-right: 1rem; }
         .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-        .border-b { border-bottom-width: 1px; }
-        .border-gray-200 { border-color: #e5e7eb; }
-        .font-bold { font-weight: 700; }
-        .uppercase { text-transform: uppercase; }
-        .text-xs { font-size: 0.75rem; }
-        .tracking-wide { letter-spacing: 0.025em; }
-        .mt-6 { margin-top: 1.5rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+        .pt-4 { padding-top: 1rem; }
         .pt-6 { padding-top: 1.5rem; }
-        .border-t { border-top-width: 1px; }
-        .border-gray-100 { border-color: #f3f4f6; }
-        .drop-cap-e { font-family: serif; }
-        .border-b-thin { border-bottom: 1px solid #e5e7eb; }
+        .pb-8 { padding-bottom: 2rem; }
         
-        /* Transições suaves gerais */
-        #site-header, #intro-content, #main-content {
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mb-4 { margin-top: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        
+        .border-b { border-bottom: 1px solid #e5e7eb; }
+        .border-t { border-top: 1px solid #e5e7eb; }
+        
+        .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        
+        .text-center { text-align: center; }
+        .text-xs { font-size: 0.75rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-gray-600 { color: #4b5563; }
+        .text-gray-400 { color: #9ca3af; }
+        .text-white { color: #ffffff; }
+        .text-red { color: var(--news-red); }
+        
+        .font-bold { font-weight: 700; }
+        .font-light { font-weight: 300; }
+        .uppercase { text-transform: uppercase; }
+        .tracking-wide { letter-spacing: 0.025em; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .tracking-widest { letter-spacing: 0.1em; }
+        .leading-tight { line-height: 1.1; }
+        .leading-normal { line-height: 1.4; }
+        
+        .rounded-sm { border-radius: 0.125rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-full { border-radius: 9999px; }
+        
+        .gap-1-5 { gap: 0.375rem; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-3 { gap: 0.75rem; }
+        .gap-5 { gap: 1.25rem; }
+        
+        .relative { position: relative; }
+        .inline-flex { display: inline-flex; }
+        .align-middle { vertical-align: middle; }
+        
+        .h-6 { height: 1.5rem; }
+        .w-6 { width: 1.5rem; }
+        .h-2-5 { height: 0.625rem; }
+        .w-2-5 { width: 0.625rem; }
+        .h-full { height: 100%; }
+        
+        .animate-ping { animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
+        @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+        
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        
+        .font-serif { font-family: 'Merriweather', Georgia, serif; }
+        .font-display { font-family: 'Playfair Display', 'Times New Roman', serif; }
+        
+        #checkout-button { cursor: pointer; text-decoration: none; transition: transform 0.2s; }
+        #checkout-button:active { transform: scale(0.95); }
 
-        /* Font swap for performance */
         @font-face { font-family: 'Merriweather'; font-display: optional; }
         @font-face { font-family: 'Playfair Display'; font-display: optional; }
         @font-face { font-family: 'Libre Franklin'; font-display: optional; }
-
-        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
     </style>
 
-    <!-- Google Fonts - Ultra Speed -->
+    <!-- Google Fonts - Otimizado -->
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-
-    <!-- Tailwind CSS (Deferred - Moved to end of body) -->
-    
-    <style>
-        .drop-cap-e { font-family: serif; }
-        .border-b-thin { border-bottom: 1px solid #e5e7eb; }
-    </style>
 </head>
-<body class="bg-[#f0f0f0] font-sans text-[#1a1a1a]">
-    
-    <!-- Container Principal -->
-    <div class="min-h-screen flex justify-center items-start sm:py-8">
-      
-      <!-- Container Mobile -->
-      <div id="main-app-container" class="w-full max-w-[414px] bg-white min-h-screen sm:min-h-fit shadow-2xl flex flex-col mx-auto relative z-0">
+<body>
+    <div class="min-h-screen flex justify-center items-start" style="padding-top: 2rem; padding-bottom: 2rem;">
+      <div id="main-app-container" class="w-full max-w-mobile bg-white shadow-2xl flex flex-col relative">
         
-        <!-- Header 'El País' -->
-        <header id="site-header" class="w-full bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200 h-[60px] relative z-50 transition-all duration-300">
-            <img src="https://i.imgur.com/NKFUwPv.png" alt="Menu e Logo EL PAÍS" class="h-full max-h-[32px] object-contain">
+        <header id="site-header" class="w-full bg-white px-4 py-3 flex items-center justify-between border-b" style="height: 60px; z-index: 50;">
+            <img src="https://i.imgur.com/NKFUwPv.png" alt="Logo EL PAÍS" style="height: 100%; max-height: 32px; object-fit: contain;">
             <div class="flex items-center gap-3">
-                <button class="bg-elpais-yellow text-xs font-bold px-3 py-1.5 uppercase tracking-wide rounded-sm hover:opacity-90 transition-opacity">
-                    Suscríbete
-                </button>
-                <button class="text-black">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-black">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                </button>
+                <button class="bg-elpais-yellow text-xs font-bold px-3 py-1.5 uppercase tracking-wide rounded-sm" style="border: none; cursor: pointer;">Suscríbete</button>
+                <div style="cursor: pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
             </div>
         </header>
 
-        <!-- Conteúdo Principal -->
-        <main id="main-content" class="flex-1 bg-white px-4 pt-4 pb-8 relative z-10 transition-all duration-300">
-            
-            <div id="intro-content">
-                <!-- Data -->
-                <div class="flex justify-center mb-4">
-                    <span class="text-[11px] uppercase font-bold text-gray-800 font-sans tracking-wide">
-                        28 dic 2025
-                    </span>
-                </div>
-
-                <!-- Título com Letra Capitular 'E' -->
-                <article class="mb-6">
-                    <h1 class="font-display font-bold text-[30px] leading-[1.1] text-black mb-4 tracking-tight">
-                        <span class="inline-flex items-center justify-center bg-[#e8e8e8] text-[#a8a8a8] w-6 h-6 mr-1.5 align-middle rounded-sm">
-                             <span class="bg-elpais-yellow w-full h-full flex items-center justify-center text-black font-serif font-bold text-lg pt-0.5">E</span>
-                        </span>
-                        La gran mentira sobre la memoria: por qué el Alzheimer sigue avanzando pese a décadas de medicamentos
-                    </h1>
-
-                    <!-- Subtítulo / Lead -->
-                    <p class="font-serif text-[17px] leading-[1.4] text-gray-600 font-light">
-                        Mientras la industria promete soluciones, los casos se multiplican. Un nuevo video expone una hipótesis inquietante: una toxina invisible presente en el aire, el agua y los alimentos podría estar robando recuerdos en silencio. Y revela por qué nadie habla de ello.
-                    </p>
-                </article>
+        <main id="main-content" class="flex-1 bg-white px-4 pt-4 pb-8 relative" style="z-index: 10;">
+            <div class="flex justify-center mb-4">
+                <span class="text-xs uppercase font-bold text-gray-800 tracking-wide" style="font-size: 11px;">28 dic 2025</span>
             </div>
 
-            <!-- Seção de Vídeo Vturb (Smart Player) -->
-            <div class="w-full mt-6 border-t border-gray-100 pt-6">
+            <article class="mb-6">
+                <h1 class="font-display font-bold leading-tight tracking-tight mb-4" style="font-size: 30px;">
+                    <span class="inline-flex items-center justify-center bg-gray-100 text-gray-400 w-6 h-6 align-middle rounded-sm" style="margin-right: 6px;">
+                         <span class="bg-elpais-yellow w-full h-full flex items-center justify-center text-black font-serif font-bold text-lg" style="padding-top: 2px;">E</span>
+                    </span>
+                    La gran mentira sobre la memoria: por qué el Alzheimer sigue avanzando pese a décadas de medicamentos
+                </h1>
+                <p class="font-serif leading-normal text-gray-600 font-light" style="font-size: 17px;">
+                    Mientras la industria promete soluciones, los casos se multiplican. Un nuevo video expone una hipótesis inquietante: una toxina invisible presente en el aire, el agua y los alimentos podría estar robando recuerdos em silêncio. Y revela por qué ninguém fala de ello.
+                </p>
+            </article>
+
+            <div class="w-full mt-6 border-t pt-6" style="border-color: #f3f4f6;">
                 <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
                 
-                <!-- Contador de Visualizações -->
-                <div class="mt-3 text-center font-sans text-[15px] flex items-center justify-center gap-1.5">
-                    <span class="relative flex h-2.5 w-2.5">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#d40000]"></span>
+                <div class="mt-3 text-center text-sm flex items-center justify-center gap-1-5" style="font-size: 15px;">
+                    <span class="relative flex h-2-5 w-2-5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400" style="opacity: 0.75;"></span>
+                        <span class="relative inline-flex rounded-full h-2-5 w-2-5" style="background-color: var(--news-red);"></span>
                     </span>
                     <div>
-                        <span id="viewer-count" class="font-bold text-[#d40000]">924</span> 
+                        <span id="viewer-count" class="font-bold text-red">924</span> 
                         <span class="text-gray-600">personas viendo ahora</span>
                     </div>
                 </div>
 
-                <!-- Botão de Ação (Checkout) -->
                 <div id="checkout-container" class="mt-8 flex flex-col items-center justify-center text-center w-full gap-5" style="display: none !important;">
-                    <a href="#" id="checkout-button" class="w-full max-w-[320px] bg-[#28a745] hover:bg-[#218838] text-white font-bold py-4 px-6 rounded-lg text-lg uppercase tracking-wider shadow-lg transform transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto">
+                    <a href="#" id="checkout-button" class="w-full bg-green text-white font-bold py-4 px-6 rounded-lg text-lg uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 mx-auto" style="max-width: 320px;">
                         <span>Quiero saber más</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" x2="19" y1="12" y2="12"></line>
@@ -137,60 +162,44 @@
                         </svg>
                     </a>
                     <p class="text-black font-bold text-sm w-full mt-2">
-                        <span class="text-[#d40000] animate-pulse">¡Atención!</span> Quedan solo <span class="text-[#d40000] animate-pulse">13</span> plazas disponíveis
+                        <span class="text-red animate-pulse">¡Atención!</span> Quedan solo <span class="text-red animate-pulse">13</span> plazas disponíveis
                     </p>
                 </div>
             </div>
-
         </main>
         
-        <!-- Footer -->
-        <footer id="site-footer" class="bg-white py-6 border-t border-gray-200 text-center transition-all duration-300">
-             <p class="text-[10px] text-gray-400 font-sans uppercase tracking-widest">
-                 © 2025 EDICIONES EL PAÍS
-             </p>
+        <footer id="site-footer" class="bg-white py-6 border-t text-center" style="border-color: #e5e7eb;">
+             <p class="text-xs text-gray-400 uppercase tracking-widest" style="font-size: 10px;">© 2025 EDICIONES EL PAÍS</p>
         </footer>
-
       </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="assets/script.js" defer></script>
-
-    <!-- Tailwind CSS (Moved to end to reduce TBT) -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
-      window.addEventListener('load', () => {
-          tailwind.config = {
-            theme: {
-              extend: {
-                fontFamily: {
-                  serif: ['"Merriweather"', 'Georgia', 'serif'],
-                  display: ['"Playfair Display"', 'Times New Roman', 'serif'],
-                  sans: ['"Libre Franklin"', 'Arial', 'sans-serif'],
-                },
-                colors: {
-                  'elpais-yellow': '#fcdb00',
-                  'news-black': '#1a1a1a',
+        (function() {
+            var viewerDisplay = document.getElementById('viewer-count');
+            if (viewerDisplay) {
+                var min = 913, max = 957;
+                var current = Math.floor(Math.random() * (max - min + 1)) + min;
+                viewerDisplay.textContent = current;
+                function updateCount() {
+                    var change = Math.floor(Math.random() * 7) - 3;
+                    current += change;
+                    if (current < min) current = min + 2;
+                    if (current > max) current = max - 2;
+                    viewerDisplay.textContent = current;
+                    setTimeout(updateCount, Math.floor(Math.random() * 2000) + 1000);
                 }
-              }
+                updateCount();
             }
-          };
-      });
-    </script>
-    
-    <!-- VTurb Speed Optimization (DEFERRED) -->
-    <script type="text/javascript" id="scr_6959b2bbc9de5690088a914b">
-        // Só carrega o vídeo 2 segundos após a página estar pronta
-        // Isso prioriza o FCP e o texto da página
+        })();
+
         window.addEventListener('load', function() {
             setTimeout(function() {
                 var s = document.createElement('script');
-                s.type = 'text/javascript';
                 s.src = 'https://scripts.converteai.net/6959b2bbc9de5690088a914b/players/6959b2bbc9de5690088a914b/player.js';
                 s.async = true;
                 document.body.appendChild(s);
-            }, 2000);
+            }, 1500);
         });
     </script>
 </body>
