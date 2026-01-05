@@ -96,46 +96,39 @@
                 <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
                 
                 <script>
-                  /* CONFIGURAÇÃO DE RASTREAMENTO DO VTURB */
+                  // Script Otimizado para VTurb (Sem interferência de extensões)
                   
-                  // Intervalo de segurança: verifica a cada meio segundo se o vídeo carregou
-                  const vturbIntervalo = setInterval(function() {
-                      
-                      // Verifica se o VTurb já existe na página
-                      if (window.smartplayer && window.smartplayer.instances && window.smartplayer.instances.length > 0) {
-                          
-                          // 1. O vídeo foi encontrado! Parar de procurar.
-                          clearInterval(vturbIntervalo);
-                          console.log("✅ VTurb conectado com sucesso! Monitorando eventos...");
+                  console.log("🚀 Iniciando rastreamento VTurb...");
 
-                          // 2. Conectar aos eventos de cada vídeo na página
-                          window.smartplayer.instances.forEach(function(instance) {
-                              
-                              // --- DETECTAR PLAY ---
-                              instance.on("play", function() {
-                                  console.log("▶️ PLAY: O usuário iniciou o vídeo.");
-                                  // Exemplo: window.dataLayer.push({'event': 'video_play'});
-                              });
+                  const intervaloVerificacao = setInterval(() => {
+                    // Verifica se o player já carregou totalmente
+                    if (window.smartplayer && window.smartplayer.instances && window.smartplayer.instances.length > 0) {
+                        
+                        clearInterval(intervaloVerificacao); // Para de procurar
+                        console.log("✅ VTurb conectado! Escutando eventos...");
 
-                              // --- DETECTAR PAUSE ---
-                              instance.on("pause", function() {
-                                  console.log("⏸️ PAUSE: O usuário pausou o vídeo.");
-                              });
+                        window.smartplayer.instances.forEach(instance => {
+                            
+                            // --- EVENTO DE PLAY ---
+                            instance.on("play", () => {
+                                console.log("▶️ PLAY CONFIRMADO");
+                                // Aqui você dispara seu Pixel/GTM
+                                // window.dataLayer.push({'event': 'video_play'});
+                            });
 
-                              // --- DETECTAR FIM DO VÍDEO ---
-                              instance.on("ended", function() {
-                                  console.log("🏁 END: O vídeo terminou.");
-                              });
+                            // --- EVENTO DE PAUSE ---
+                            instance.on("pause", () => {
+                                console.log("⏸️ PAUSE CONFIRMADO");
+                            });
 
-                              // --- (OPCIONAL) DETECTAR TEMPO PARA DELAY ---
-                              // instance.on("timeupdate", function(data) {
-                              //     if (data.seconds >= 60) {
-                              //         console.log("⏱️ Passou de 60 segundos!");
-                              //     }
-                              // });
-                          });
-                      }
-                  }, 500); // Tenta conectar a cada 500ms
+                            // --- (Opcional) EVENTO DE TEMPO PARA VSL ---
+                            // instance.on("timeupdate", (data) => {
+                            //    console.log("Tempo:", data.seconds);
+                            // });
+
+                        });
+                    }
+                  }, 1000); // Verifica a cada 1 segundo
                 </script>
                 
                 <!-- Contador de Visualizações -->
