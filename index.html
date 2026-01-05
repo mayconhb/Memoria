@@ -96,39 +96,59 @@
                 <vturb-smartplayer id="vid-6959b2bbc9de5690088a914b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
                 
                 <script>
-                  // Script Otimizado para VTurb (Sem interferência de extensões)
-                  
-                  console.log("🚀 Iniciando rastreamento VTurb...");
+                  console.log("🕵️ Iniciando Varredura Profunda (Shadow DOM)...");
 
-                  const intervaloVerificacao = setInterval(() => {
-                    // Verifica se o player já carregou totalmente
+                  const rastreadorVturb = setInterval(() => {
+                    let encontrouAlgo = false;
+
+                    // --- TENTATIVA 1: Via API Oficial (O jeito educado) ---
                     if (window.smartplayer && window.smartplayer.instances && window.smartplayer.instances.length > 0) {
-                        
-                        clearInterval(intervaloVerificacao); // Para de procurar
-                        console.log("✅ VTurb conectado! Escutando eventos...");
-
                         window.smartplayer.instances.forEach(instance => {
+                            // Verifica se já não adicionamos o listener para não duplicar
+                            if (!instance.rastreamentoAtivo) {
+                                instance.on("play", () => console.log("🔥 PLAY (Via API)"));
+                                instance.on("pause", () => console.log("⏸️ PAUSE (Via API)"));
+                                instance.rastreamentoAtivo = true; // Marca que já ativamos
+                                console.log("✅ API Oficial Conectada!");
+                                encontrouAlgo = true;
+                            }
+                        });
+                    }
+
+                    // --- TENTATIVA 2: Via Shadow DOM (O jeito "bruto") ---
+                    // Procura o componente do VTurb na página
+                    const vturbElement = document.querySelector("vturb-smartplayer");
+                    
+                    // Se achou o componente e ele tem a "sombra" (conteúdo interno) aberta
+                    if (vturbElement && vturbElement.shadowRoot) {
+                        // Tenta achar o elemento <video> real lá dentro
+                        const videoNativo = vturbElement.shadowRoot.querySelector("video");
+                        
+                        if (videoNativo && !videoNativo.dataset.rastreando) {
+                            console.log("🔓 Vídeo Nativo encontrado no Shadow DOM!");
                             
-                            // --- EVENTO DE PLAY ---
-                            instance.on("play", () => {
-                                console.log("▶️ PLAY CONFIRMADO");
-                                // Aqui você dispara seu Pixel/GTM
+                            // Adiciona o ouvinte direto no motor do navegador
+                            videoNativo.addEventListener("play", () => {
+                                console.log("🎯 PLAY DETECTADO (NATIVO)");
                                 // window.dataLayer.push({'event': 'video_play'});
                             });
 
-                            // --- EVENTO DE PAUSE ---
-                            instance.on("pause", () => {
-                                console.log("⏸️ PAUSE CONFIRMADO");
+                            videoNativo.addEventListener("pause", () => {
+                                console.log("⏸️ PAUSE DETECTADO (NATIVO)");
                             });
 
-                            // --- (Opcional) EVENTO DE TEMPO PARA VSL ---
-                            // instance.on("timeupdate", (data) => {
-                            //    console.log("Tempo:", data.seconds);
-                            // });
-
-                        });
+                            videoNativo.dataset.rastreando = "true"; // Marca para não repetir
+                            encontrouAlgo = true;
+                        }
                     }
-                  }, 1000); // Verifica a cada 1 segundo
+
+                    // Se qualquer um dos dois métodos funcionou, paramos de procurar
+                    if (encontrouAlgo) {
+                        clearInterval(rastreadorVturb);
+                        console.log("🚀 Rastreamento 100% Ativo. Pode testar.");
+                    }
+
+                  }, 1000); // Tenta a cada 1 segundo
                 </script>
                 
                 <!-- Contador de Visualizações -->
