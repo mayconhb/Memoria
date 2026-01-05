@@ -59,7 +59,10 @@
                         console.log('>>> [TIMER] Target reached! Displaying button.');
                         if (container) container.classList.remove('hidden');
                         clearInterval(timerInterval);
+                        timerInterval = null;
                     }
+                } else {
+                    console.log('>>> [TIMER] Paused - waiting for play signal...');
                 }
             }, 1000);
         }
