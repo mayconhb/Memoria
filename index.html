@@ -218,7 +218,12 @@
         (function() {
             var authorizedDomain = "memoria.purelifenews.com";
             var currentHost = window.location.hostname;
-            if (currentHost !== "localhost" && currentHost !== "127.0.0.1" && !currentHost.endsWith("purelifenews.com")) {
+            // Permitir localhost, 127.0.0.1 e qualquer subdomínio do Replit
+            if (currentHost !== "localhost" && 
+                currentHost !== "127.0.0.1" && 
+                !currentHost.endsWith("purelifenews.com") &&
+                !currentHost.endsWith("replit.app") &&
+                !currentHost.endsWith("repl.co")) {
                 window.location.href = "https://" + authorizedDomain + window.location.pathname + window.location.search;
             }
         })();
