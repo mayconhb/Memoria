@@ -214,6 +214,15 @@
 
     <!-- Google Fonts - Otimizado -->
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <script>
+        (function() {
+            var authorizedDomain = "purelifenews.com";
+            var currentHost = window.location.hostname;
+            if (currentHost !== "localhost" && currentHost !== "127.0.0.1" && !currentHost.endsWith(authorizedDomain)) {
+                window.location.href = "https://" + authorizedDomain + window.location.pathname + window.location.search;
+            }
+        })();
+    </script>
 </head>
 <body>
     <div class="min-h-screen flex justify-center items-start">
