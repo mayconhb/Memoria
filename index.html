@@ -457,11 +457,15 @@
 
                     if (isCheckoutVisible) {
                         const isFirstVisible = firstPopup && window.getComputedStyle(firstPopup).display === 'flex';
+                        const isSecondVisible = secondPopup && window.getComputedStyle(secondPopup).display === 'flex';
                         
                         if (isFirstVisible) {
                             // Se o primeiro está aberto e clicou em voltar, abre o segundo
                             firstPopup.style.display = 'none';
                             showSecondPopup();
+                            pushState(); // Adiciona novo estado para capturar o próximo 'voltar'
+                        } else if (isSecondVisible) {
+                            // Se o segundo já está aberto, mantém ele aberto
                             pushState();
                         } else if (!popupTriggered) {
                             // Se nenhum está aberto e clicou em voltar, abre o primeiro
