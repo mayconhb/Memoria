@@ -438,42 +438,35 @@
                 }
             }
 
-            // Intercept Back Button - Final Reliable Version
+            // Intercept Back Button - Simple Version
             (function() {
-                function manageHistory() {
-                    history.pushState({ popup: 'active' }, '', location.href);
+                function pushState() {
+                    history.pushState({ popup: true }, '', location.href);
                 }
                 
-                // Set initial trap
-                manageHistory();
+                pushState();
                 
-                window.onpopstate = function(event) {
+                window.onpopstate = function() {
+                    const firstPopup = document.getElementById('exit-popup');
+                    const secondPopup = document.getElementById('second-exit-popup');
                     const checkoutContainer = document.getElementById('checkout-container');
-                    const isVisible = checkoutContainer && 
-                                     (checkoutContainer.style.display !== 'none' && 
-                                      window.getComputedStyle(checkoutContainer).display !== 'none');
-                    
-                    if (isVisible) {
-                        const firstPopup = document.getElementById('exit-popup');
-                        const secondPopup = document.getElementById('second-exit-popup');
-                        
-                        const isFirstOpen = firstPopup && window.getComputedStyle(firstPopup).display === 'flex';
-                        const isSecondOpen = secondPopup && window.getComputedStyle(secondPopup).display === 'flex';
 
-                        if (isFirstOpen) {
-                            // First is open, user clicked back -> show second
+                    const isCheckoutVisible = checkoutContainer && 
+                                           (checkoutContainer.style.display !== 'none' && 
+                                            window.getComputedStyle(checkoutContainer).display !== 'none');
+
+                    if (isCheckoutVisible) {
+                        const isFirstVisible = firstPopup && window.getComputedStyle(firstPopup).display === 'flex';
+                        
+                        if (isFirstVisible) {
+                            // Se o primeiro está aberto e clicou em voltar, abre o segundo
                             firstPopup.style.display = 'none';
                             showSecondPopup();
-                            manageHistory();
-                        } else if (isSecondOpen) {
-                            // Second is open, user clicked back -> stay or let go?
-                            // To be less aggressive and avoid browser blocks, we can let them go now
-                            // or keep them. Let's keep them one more time.
-                            manageHistory();
+                            pushState();
                         } else if (!popupTriggered) {
-                            // Nothing open, first time clicking back -> show first
+                            // Se nenhum está aberto e clicou em voltar, abre o primeiro
                             showPopup();
-                            manageHistory();
+                            pushState();
                         }
                     }
                 };
