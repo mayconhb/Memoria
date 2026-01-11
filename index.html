@@ -113,7 +113,7 @@
         #checkout-button { cursor: pointer; text-decoration: none; transition: transform 0.2s; }
 
         /* Exit Popup Styles */
-        #exit-popup {
+        #exit-popup, #second-exit-popup {
             display: none;
             position: fixed;
             top: 0;
@@ -126,7 +126,7 @@
             align-items: center;
             padding: 20px;
         }
-        #exit-popup .popup-content {
+        #exit-popup .popup-content, #second-exit-popup .popup-content {
             background: #fff;
             padding: 30px 20px;
             border-radius: 15px;
@@ -135,7 +135,7 @@
             text-align: center;
             position: relative;
         }
-        #exit-popup .close-popup {
+        #exit-popup .close-popup, #second-exit-popup .close-popup {
             position: absolute;
             top: 10px;
             right: 15px;
@@ -325,9 +325,31 @@
         </div>
     </div>
 
+    <!-- Second Exit Popup (Last Chance) -->
+    <div id="second-exit-popup">
+        <div class="popup-content">
+            <div class="offer-title">¡ÚLTIMA OPORTUNIDAD!</div>
+            <p class="offer-text">No quiero que te vayas sin el protocolo. Esta es mi oferta final para ayudarte a recuperar tu memoria.</p>
+            <div class="price-box">
+                <span class="new-price">Acceso total por solo US$ 9,90</span>
+            </div>
+            <a href="https://pay.hotmart.com/X103671940D?off=rsj62ykc&checkoutMode=10" class="popup-btn">SÍ, QUIERO MI ÚLTIMA OPORTUNIDADE »</a>
+            <button class="decline-text" onclick="closeSecondPopup()">No, prefiero perder esta oportunidad para siempre.</button>
+        </div>
+    </div>
+
     <script>
         function closePopup() {
             document.getElementById('exit-popup').style.display = 'none';
+            showSecondPopup();
+        }
+
+        function closeSecondPopup() {
+            document.getElementById('second-exit-popup').style.display = 'none';
+        }
+
+        function showSecondPopup() {
+            document.getElementById('second-exit-popup').style.display = 'flex';
         }
 
         (function() {
@@ -356,13 +378,15 @@
                                  checkoutContainer.style.display !== 'none' && 
                                  window.getComputedStyle(checkoutContainer).display !== 'none';
                 
-                if (isVisible && !popupTriggered) {
-                    showPopup();
-                    history.pushState(null, null, location.href);
-                } else {
-                    // If not visible or already shown, allow normal back behavior
-                    // but we need to stay if we want to show it.
-                    // For now, if shown or not visible, let them go.
+                if (isVisible) {
+                    if (!popupTriggered) {
+                        showPopup();
+                        history.pushState(null, null, location.href);
+                    } else if (document.getElementById('exit-popup').style.display === 'flex') {
+                        document.getElementById('exit-popup').style.display = 'none';
+                        showSecondPopup();
+                        history.pushState(null, null, location.href);
+                    }
                 }
             };
 
