@@ -439,7 +439,12 @@
             }
 
             // Intercept Back Button
-            history.pushState(null, null, location.href);
+            function manageHistory() {
+                history.pushState(null, null, location.href);
+            }
+            
+            manageHistory();
+            
             window.onpopstate = function() {
                 const checkoutContainer = document.getElementById('checkout-container');
                 const isVisible = checkoutContainer && 
@@ -447,13 +452,21 @@
                                  window.getComputedStyle(checkoutContainer).display !== 'none';
                 
                 if (isVisible) {
-                    if (!popupTriggered) {
-                        showPopup();
-                        history.pushState(null, null, location.href);
-                    } else if (document.getElementById('exit-popup').style.display === 'flex') {
-                        document.getElementById('exit-popup').style.display = 'none';
+                    const firstPopup = document.getElementById('exit-popup');
+                    const secondPopup = document.getElementById('second-exit-popup');
+                    
+                    if (firstPopup.style.display === 'flex') {
+                        // If first is open, hide it and show second
+                        firstPopup.style.display = 'none';
                         showSecondPopup();
-                        history.pushState(null, null, location.href);
+                        manageHistory();
+                    } else if (secondPopup.style.display === 'flex') {
+                        // If second is open, let it stay (or close if you want, but usually stay)
+                        manageHistory();
+                    } else if (!popupTriggered) {
+                        // If none open and not triggered yet, show first
+                        showPopup();
+                        manageHistory();
                     }
                 }
             };
