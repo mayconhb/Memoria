@@ -438,14 +438,15 @@
                 }
             }
 
-            // Intercept Back Button
+            // Intercept Back Button - Mobile Robust Version
             function manageHistory() {
-                history.pushState(null, null, location.href);
+                history.pushState({ page: 'vsl' }, '', location.href);
             }
             
+            // Initial state
             manageHistory();
             
-            window.onpopstate = function() {
+            window.addEventListener('popstate', function(event) {
                 const checkoutContainer = document.getElementById('checkout-container');
                 const isVisible = checkoutContainer && 
                                  checkoutContainer.style.display !== 'none' && 
@@ -455,21 +456,24 @@
                     const firstPopup = document.getElementById('exit-popup');
                     const secondPopup = document.getElementById('second-exit-popup');
                     
-                    if (firstPopup.style.display === 'flex') {
-                        // If first is open, hide it and show second
+                    const isFirstOpen = firstPopup && window.getComputedStyle(firstPopup).display === 'flex';
+                    const isSecondOpen = secondPopup && window.getComputedStyle(secondPopup).display === 'flex';
+
+                    if (isFirstOpen) {
+                        // 1. If FIRST is open -> Close it and Open SECOND
                         firstPopup.style.display = 'none';
                         showSecondPopup();
                         manageHistory();
-                    } else if (secondPopup.style.display === 'flex') {
-                        // If second is open, let it stay (or close if you want, but usually stay)
+                    } else if (isSecondOpen) {
+                        // 2. If SECOND is already open -> Keep it open
                         manageHistory();
-                    } else if (!popupTriggered) {
-                        // If none open and not triggered yet, show first
+                    } else {
+                        // 3. If NONE is open -> Show FIRST
                         showPopup();
                         manageHistory();
                     }
                 }
-            };
+            });
 
             // Mouse leave for desktop as fallback
             document.addEventListener('mouseleave', (e) => {
