@@ -159,7 +159,7 @@
             display: block;
             margin-top: 5px;
         }
-        #exit-popup .popup-btn, #second-exit-popup .popup-btn {
+        #exit-popup .popup-btn {
             background: var(--elpais-yellow);
             color: #333;
             text-decoration: none;
@@ -183,6 +183,25 @@
             background: none;
             border: none;
             width: 100%;
+        }
+        #second-exit-popup .popup-btn {
+            background: var(--news-green);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 900;
+            padding: 18px;
+            border-radius: 50px;
+            display: block;
+            font-size: 18px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #second-exit-popup .popup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
         }
         #exit-popup .close-popup, #second-exit-popup .close-popup {
             position: absolute;
@@ -382,7 +401,7 @@
             <div class="price-box">
                 <span class="new-price">Acceso total por solo US$ 9,90</span>
             </div>
-            <a href="https://pay.hotmart.com/X103671940D?off=rsj62ykc&checkoutMode=10" class="popup-btn">SÍ, QUIERO MI ÚLTIMA OPORTUNIDADE »</a>
+            <a href="https://pay.hotmart.com/X103671940D?off=rsj62ykc&checkoutMode=10" class="popup-btn">SÍ, NECESITO RECUPERAR MI MEMORIA »</a>
             <button class="decline-text" onclick="closeSecondPopup()">No, prefiero perder esta oportunidad para siempre.</button>
         </div>
     </div>
