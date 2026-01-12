@@ -419,10 +419,46 @@
         }
 
         function showSecondPopup() {
+            // Ensure parameters are updated before showing
+            const popupLinks = document.querySelectorAll('#second-exit-popup a');
+            const currentParams = window.location.search;
+            if (currentParams) {
+                popupLinks.forEach(link => {
+                    const url = new URL(link.href);
+                    const params = new URLSearchParams(currentParams);
+                    params.forEach((value, key) => {
+                        url.searchParams.set(key, value);
+                    });
+                    link.href = url.toString();
+                });
+            }
             document.getElementById('second-exit-popup').style.display = 'flex';
         }
 
         (function() {
+            // Function to append current URL parameters to a given URL
+            function appendUrlParams(targetUrl) {
+                const currentParams = window.location.search;
+                if (!currentParams) return targetUrl;
+                
+                const url = new URL(targetUrl);
+                const params = new URLSearchParams(currentParams);
+                
+                params.forEach((value, key) => {
+                    url.searchParams.set(key, value);
+                });
+                
+                return url.toString();
+            }
+
+            // Update all links in popups to include current URL parameters
+            function updatePopupLinks() {
+                const popupLinks = document.querySelectorAll('#exit-popup a, #second-exit-popup a');
+                popupLinks.forEach(link => {
+                    link.href = appendUrlParams(link.href);
+                });
+            }
+
             let popupTriggered = false;
             const checkoutContainer = document.getElementById('checkout-container');
 
@@ -435,6 +471,7 @@
                                  window.getComputedStyle(checkoutContainer).display !== 'none';
                 
                 if (isVisible) {
+                    updatePopupLinks(); // Update links right before showing
                     document.getElementById('exit-popup').style.display = 'flex';
                     popupTriggered = true;
                 }
